@@ -17,6 +17,7 @@ package com.google.ads.mediation.pangle;
 import static com.google.ads.mediation.pangle.PangleConstants.ERROR_INVALID_SERVER_PARAMETERS;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -65,10 +66,10 @@ public class PangleMediationAdapter extends RtbAdapter {
   @VisibleForTesting
   static final String ERROR_MESSAGE_MISSING_OR_INVALID_APP_ID = "Missing or invalid App ID.";
 
-  private final PangleInitializer pangleInitializer;
-  private final PangleSdkWrapper pangleSdkWrapper;
-  private final PangleFactory pangleFactory;
-  private final PanglePrivacyConfig panglePrivacyConfig;
+  private PangleInitializer pangleInitializer;
+  private PangleSdkWrapper pangleSdkWrapper;
+  private PangleFactory pangleFactory;
+  private PanglePrivacyConfig panglePrivacyConfig;
 
   private PangleAppOpenAd appOpenAd;
   private PangleBannerAd bannerAd;
@@ -80,6 +81,11 @@ public class PangleMediationAdapter extends RtbAdapter {
   private static int ccpa = -1;
 
   public PangleMediationAdapter() {
+    // TODO: Do not initialize for API >= 35, to avoid crash
+    if (Build.VERSION.SDK_INT >= 35) {
+      return;
+    }
+
     pangleInitializer = PangleInitializer.getInstance();
     pangleSdkWrapper = new PangleSdkWrapper();
     pangleFactory = new PangleFactory();

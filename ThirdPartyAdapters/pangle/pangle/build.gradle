@@ -14,6 +14,7 @@ ext {
 }
 
 android {
+    namespace "com.google.ads.mediation.pangle"
     compileSdk 34
     defaultConfig {
         minSdkVersion 21
@@ -28,6 +29,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildFeatures {
+        buildConfig true
+    }
 }
 
 dependencies {
@@ -39,7 +43,7 @@ dependencies {
 /**
  * Jar task to make a sources jar.
  */
-task sourcesJar (type: Jar) {
+task sourcesJar(type: Jar) {
     archiveClassifier = 'sources'
     from android.sourceSets.main.java.srcDirs
 }
